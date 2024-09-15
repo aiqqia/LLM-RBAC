@@ -1,0 +1,31 @@
+# Ignore .env files (for environment variables)
+.env
+
+# Ignore virtual environment folders
+.venv/
+venv/
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+
+# Ignore Chroma folder
+chroma/
+
+# Ignore other typical Python build artifacts
+*.pyo
+*.pyd
+*.pdb
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore local IDE and editor-specific files
+.vscode/
+.idea/
