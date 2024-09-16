@@ -4,6 +4,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 import openai
+import pandas as pd
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -15,6 +16,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 openai_org_id = os.getenv("OPENAI_ORGANIZATION_ID")
 
 CHROMA_PATH = "chroma"
+file_path = 'data/roles/rbac_roles.csv'
 
 # PROMPT_TEMPLATE = """
 # Answer the question based only on the following context:
@@ -33,7 +35,31 @@ Answer the question taking reference from the following context:
 ---
 
 Answer the question based on the above context if relevant, otherwise answer : {question}
+
+{role_prompt}
 """
+
+
+def generate_role_prompt(role):
+    rbac_data = pd.read_csv(file_path)
+    # Find the row corresponding to the given role
+    role_data = rbac_data[rbac_data['Role'] == role]
+
+    if role_data.empty:
+        return f"Role '{role}' not found in the data. Tell the user that they are not authorized to use the system."
+
+    # Extract permissions and information access for the given role
+    permissions = role_data['Permissions'].values[0]
+    information_access = role_data['Information_Access'].values[0]
+
+    # Generate a prompt for the LLM
+    prompt = (f"The user with the role '{role}' has the following permissions:\n"
+              f"{permissions}.\n\n"
+              f"The user has access to the following information:\n"
+              f"{information_access}.\n\n"
+              f"Ensure that the user is restricted to these permissions and information only.")
+    
+    return prompt
 
 
 def main():
@@ -55,11 +81,14 @@ def main():
     # if len(results) == 0 or results[0][1] < 0.7:
     #     print(f"Unable to find matching results.")
     #     return
+    
+    role = "IT Support"
+    role_prompt = generate_role_prompt(role)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    prompt = prompt_template.format(context=context_text, question=query_text)
-    # print(prompt)
+    prompt = prompt_template.format(role_prompt=role_prompt, context=context_text, question=query_text)
+    print(prompt)
 
     model = ChatOpenAI(
         openai_api_key=openai_api_key,
