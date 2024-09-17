@@ -8,15 +8,6 @@ This is the code repository for implementing and exploring different ways to ach
 - [Contributing](#contributing)
 - [License](#license)
 
-## Installation
-
-### Requirements
-This project requires the following:
-- Python 3.7+
-- `numpy`
-- `pandas`
-- `requests`
-
 ### Setup
 Follow these steps to set up the project on your local machine:
 
@@ -24,3 +15,17 @@ Follow these steps to set up the project on your local machine:
    ```bash
    git clone https://github.com/aiqqia/LLM-RBAC.git
    cd LLM-RBAC
+
+## Installation & Requirements
+
+The following commands need to be run in order to run the project:
+```
+!pip install faker
+!pip install pandas
+!pip install -U langchain-openai
+!pip install python-magic
+!pip install unstructured
+!pip install chromadb
+!pip install langchain-community
+!pip install python-dotenv
+```
