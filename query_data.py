@@ -82,7 +82,7 @@ def main():
     #     print(f"Unable to find matching results.")
     #     return
     
-    role = "IT Support"
+    role = "HR Manager"
     role_prompt = generate_role_prompt(role)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
