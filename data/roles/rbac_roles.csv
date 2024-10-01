@@ -1,5 +1,5 @@
 Role,Permissions,Information_Access
-Administrator,"Full access: Read, Write, Execute, Manage Users","All Information: Access to all systems, configuration data, user accounts, logs, financial records, HR data, and authority to modify security policies, roles, and access rules."
+Administrator,"Full access: Read, Write, Execute, Manage Users","All Information: Access to all systems, configuration data, user accounts, logs, financial records, contracts, mergers, HR data, and authority to modify security policies, roles, and access rules."
 IT Support,"Read, Execute, Troubleshoot","System Logs, User Accounts: Diagnostic data, system performance reports, user technical support data, but no access to confidential HR or financial information."
 Security Officer,"Read, Monitor, Execute, Configure Security Policies","Access Logs, Security Policies, Encryption Keys: Focus on security events, audit logs, and role compliance monitoring."
 Compliance Officer,"Read, Monitor","Audit Logs, Access Logs, Compliance Reports: Access to audit reports for regulatory compliance, and user behavior monitoring logs."
