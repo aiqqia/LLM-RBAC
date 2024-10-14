@@ -1,6 +1,6 @@
 from langchain_openai import OpenAIEmbeddings
 # from langchain.llms import OpenAI
-from langchain_community.document_loaders import DirectoryLoader
+from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 from langchain_community.vectorstores import Chroma
@@ -17,7 +17,8 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai_org_id = os.getenv("OPENAI_ORGANIZATION_ID")
 
-DATA_PATH = "data/textfiles"
+DATA_PATH_TEXT = "data/textfiles"
+DATA_PATH_PDF = "data/pdffiles"
 CHROMA_PATH = "chroma"
 
 openai_embeddings = OpenAIEmbeddings(
@@ -32,8 +33,11 @@ def generate_data_store():
     save_to_chroma(chunks)
 
 def load_documents():
-    loader = DirectoryLoader(DATA_PATH, glob="*.txt")
-    documents = loader.load()
+    loader_txt = DirectoryLoader(DATA_PATH_TEXT, glob="*.txt")
+    loader_pdf = DirectoryLoader(DATA_PATH_PDF, glob="*.pdf", loader_cls=PyPDFLoader)
+    documents_txt = loader_txt.load()
+    documents_pdf = loader_pdf.load()
+    documents = documents_txt + documents_pdf
     return documents
 
 def split_text(documents: list[Document]):
