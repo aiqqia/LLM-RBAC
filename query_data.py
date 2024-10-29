@@ -98,6 +98,18 @@ def generate_role_prompt(role, permissions, information_access):
     
     return prompt
 
+def rewrite_response(response, role, permissions, information_access):
+    prompt = (f"The following response is going to an end user: \"{response}\"\n"
+              f"The user only has the following information access: {information_access}\n"
+              f"Rewrite the response by only hiding the information that the user is not supposed to know and keep the same format.\n"
+              f"Write the reason for removing if removing at all.\n")
+    model = ChatOpenAI(
+        openai_api_key=openai_api_key,
+        openai_organization=openai_org_id,
+        temperature=0
+    )
+    response_text = model.predict(prompt)
+    return response_text
 
 def main():
     # Create CLI.
@@ -151,6 +163,7 @@ def main():
         temperature=0
     )
     response_text = model.predict(prompt)
+    response_text = rewrite_response(response_text, role, permissions, information_access)
 
     sources = [doc.metadata.get("source", None) for doc, _score in results]
     formatted_response = f"\nResponse: {response_text}\n\nSources: {sources[0]}\n"
