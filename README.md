@@ -7,7 +7,7 @@ This is the code repository for implementing and exploring different ways to ach
 - [SetUp](#setup)
 - [Usage](#usage)
 
-## Installation & Requirements
+### Installation & Requirements
 
 The following commands need to be run in order to run the project:
 ```
